@@ -9,8 +9,8 @@ import Foundation
 
 
 // MARK: - Welcome
-struct Welcome: Codable {
-    let feature: [Feature]
+struct GeoWelcome: Codable {
+    let feature: [GeoFeature]
 
     enum CodingKeys: String, CodingKey {
         case feature = "Feature"
@@ -18,7 +18,7 @@ struct Welcome: Codable {
 }
 
 // MARK: - Feature
-struct Feature: Codable {
+struct GeoFeature: Codable {
     let geometry: Geometry
 
     enum CodingKeys: String, CodingKey {

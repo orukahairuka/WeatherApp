@@ -25,11 +25,12 @@ func fetchCoordinates() {
         "output": "json"
     ]
     
-    AF.request(url, parameters: parameters).responseDecodable(of: Welcome.self) { response in
+    AF.request(url, parameters: parameters).responseDecodable(of: GeoWelcome.self) { response in
         switch response.result {
         case .success(let data):
             if let coordinates = data.feature.first?.geometry.coordinates {
                 print("Coordinates:\(coordinates)")
+                fetchWether(coordinate: coordinates)
             } else {
                 print("座標取得できず")
             }
