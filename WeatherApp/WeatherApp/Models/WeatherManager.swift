@@ -22,12 +22,25 @@ func fetchWether(coordinate: String) {
         switch response.result {
         case .success(let data):
             if let firstWeather = data.feature.first?.property.weatherList.weather.first {
-                print("Weather:\(firstWeather)")
+                print("Weather:\(firstWeather.rainfall)")
+                JudgeWeather(rainfall: firstWeather.rainfall)
             } else {
                 print("天気取得できず")
             }
         case .failure(let error):
             print("api取得失敗")
         }
+    }
+}
+
+func JudgeWeather(rainfall:Double) {
+    if 0.0 <= rainfall && rainfall < 0.5 {
+        print("晴れ")
+    } else if 0.5 <= rainfall && rainfall < 1.0 {
+        print("小雨")
+    } else if 1.0 <= rainfall && rainfall < 10.0 {
+        print("雨")
+    } else if 10.0 <= rainfall {
+        print("強い雨")
     }
 }

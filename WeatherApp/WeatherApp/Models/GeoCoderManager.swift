@@ -8,10 +8,9 @@
 import Foundation
 import Alamofire
 
-func fetchCoordinates() {
+func fetchCoordinates(query:String) {
     let url = "https://map.yahooapis.jp/geocode/cont/V1/contentsGeoCoder"
-    let query = "六本木"
-    
+
     //エンコードの処理
     guard let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
         print("エンコードに失敗しました")
