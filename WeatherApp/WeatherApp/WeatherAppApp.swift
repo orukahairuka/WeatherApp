@@ -11,7 +11,10 @@ import SwiftUI
 struct WeatherAppApp: App {
     var body: some Scene {
         WindowGroup {
-            WeatherView()
+            let weatherManager = WeatherManager()
+            let geoCoderManager = GeoCoderManager(weatherManager: weatherManager)
+            
+            WeatherView(geoCoderManager: geoCoderManager)
         }
     }
 }
