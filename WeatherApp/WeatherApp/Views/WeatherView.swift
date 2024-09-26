@@ -9,13 +9,21 @@ import SwiftUI
 
 struct WeatherView: View {
     @State private var inputText = ""
+    private var geoCoderManager = GeoCoderManager()
+    @StateObject private var weatherManager = WeatherManager()
     var body: some View {
-        TextField("地域を入力して", text: $inputText)
-        Button {
-            fetchCoordinates(query: inputText)
-            inputText = ""
-        } label: {
-            Text("検索")
+        VStack {
+            Text(weatherManager.weather)
+                .onChange(of: weatherManager.weather) { newValue in
+                        print("天気が更新されました: \(newValue)")
+                    }
+            TextField("地域を入力して", text: $inputText)
+            Button {
+                geoCoderManager.fetchCoordinates(query: inputText)
+                inputText = ""
+            } label: {
+                Text("検索")
+            }
         }
     }
 }
