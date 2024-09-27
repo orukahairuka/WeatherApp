@@ -12,26 +12,30 @@ struct WeatherView: View {
     @State private var inputText = ""
     @State private var geoCoderManager: GeoCoderManager
     @StateObject private var weatherManager = WeatherManager()
+    @State private var region = ""
     // カスタムイニシャライザを追加
     init(geoCoderManager: GeoCoderManager) {
         _geoCoderManager = State(initialValue: geoCoderManager)
     }
     
     var body: some View {
-        VStack {
-            Text(weatherManager.weather)
-            
-            TextField("地域を入力して", text: $inputText)
-            Button {
-                geoCoderManager.fetchCoordinates(query: inputText)
-                inputText = ""
-            } label: {
-                Text("検索")
+        ZStack {
+            VStack {
+                Text("\($region),\(weatherManager.weather)")
+                
+                TextField("地域を入力して", text: $inputText)
+                Button {
+                    geoCoderManager.fetchCoordinates(query: inputText)
+                    region = inputText
+                    inputText = ""
+                } label: {
+                    Text("検索")
+                }
             }
-        }
-        .onAppear {
-            // @StateObjectのweatherManagerが初期化された後で、geoCoderManagerを初期化
-            geoCoderManager = GeoCoderManager(weatherManager: weatherManager)
+            .onAppear {
+                // @StateObjectのweatherManagerが初期化された後で、geoCoderManagerを初期化
+                geoCoderManager = GeoCoderManager(weatherManager: weatherManager)
+            }
         }
     }
 }
